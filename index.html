@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نظام إدارة خدمات تقنية المعلومات | ITSM</title>
+    <!-- استدعاء خط Cairo المميز والتصميم العصرى -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- ربط ملف التنسيقات الخارجية CSS -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- الهيدر الرئيسي / الشريط العلوي -->
+    <header class="main-header">
+      <div class="logo">
+        <h2>🖥️ ITSM <span>HelpDesk</span></h2>
+      </div>
+      <!-- زر فتح النافذة المنبثقة لإضافة تذكرة جديدة -->
+      <button class="btn btn-primary" id="openModalBtn">
+        + إنشاء تذكرة جديدة
+      </button>
+    </header>
+
+    <!-- الحاوية الرئيسية للمحتوى -->
+    <main class="container">
+      <!-- قسم لوحة الأحصائيات (Dashboard Cards) -->
+      <section class="stats-grid">
+        <div class="card stat-card total">
+          <h3>إجمالي التذاكر</h3>
+          <p id="totalTicketsCount">0</p>
+        </div>
+        <div class="card stat-card pending">
+          <h3>قيد الانتظار</h3>
+          <p id="pendingTicketsCount">0</p>
+        </div>
+        <div class="card stat-card progress">
+          <h3>قيد المعالجة</h3>
+          <p id="progressTicketsCount">0</p>
+        </div>
+        <div class="card stat-card closed">
+          <h3>تم إغلاقها</h3>
+          <p id="closedTicketsCount">0</p>
+        </div>
+      </section>
+
+      <!-- قسم الجدول والتصفية (Filters & Table) -->
+      <section class="card table-section">
+        <div class="table-header">
+          <h3>سجل تذاكر الدعم الفني</h3>
+          <!-- حقل البحث والتصفية حسب الحالة -->
+          <div class="table-controls">
+            <input type="text" id="searchInput" placeholder="بحث عن تذكرة..." />
+            <select id="filterStatus">
+              <option value="ALL">جميع الحالات</option>
+              <option value="جديد">جديد</option>
+              <option value="قيد المعالجة">قيد المعالجة</option>
+              <option value="مغلق">مغلق</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- جدول عرض التذاكر -->
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>رقم التذكرة</th>
+                <th>عنوان المشكلة</th>
+                <th>القسم</th>
+                <th>الأولوية</th>
+                <th>الحالة</th>
+                <th>تاريخ الإنشاء</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <!-- سيتم تعبئة هذا الجزء آلياً عن طريق JavaScript -->
+            <tbody id="ticketsTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- النافذة المنبثقة (Pop-up Modal) لإضافة تذكرة -->
+    <div class="modal-overlay" id="ticketModal">
+      <div class="modal-card">
+        <!-- زر إغلاق النافذة (X) -->
+        <span class="close-btn" id="closeModalBtn">&times;</span>
+        <div class="modal-header">
+          <h3>إنشاء تذكرة دعم فني جديدة</h3>
+          <p>قم بتعبئة البيانات لتوجيه التذكرة للفني المختص</p>
+        </div>
+
+        <!-- نموذج إضافة التذكرة -->
+        <form id="ticketForm">
+          <div class="form-group">
+            <label for="ticketTitle">عنوان المشكلة / الطلب:</label>
+            <input
+              type="text"
+              id="ticketTitle"
+              required
+              placeholder="مثال: تعطل طابعة قسم المالية"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ticketDepartment">القسم المعني:</label>
+              <select id="ticketDepartment" required>
+                <option value="الشبكات">الشبكات والإنترنت</option>
+                <option value="الأجهزة والأنظمة">الأجهزة والأنظمة</option>
+                <option value="البرمجيات">البرمجيات والتطبيقات</option>
+                <option value="الأمن السيبراني">الأمن السيبراني</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ticketPriority">مستوى الأولوية (SLA):</label>
+              <select id="ticketPriority" required>
+                <option value="منخفضة">منخفضة</option>
+                <option value="متوسطة" selected>متوسطة</option>
+                <option value="عالية">عالية (حرج)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="ticketDescription">تفاصيل المشكلة:</label>
+            <textarea
+              id="ticketDescription"
+              rows="4"
+              placeholder="اكتب وصفاً دقيقاً للمشكلة لسهولة التشخيص..."
+              required
+            ></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">
+              إلغاء
+            </button>
+            <button type="submit" class="btn btn-primary">
+              حفظ وتأكيد التذكرة
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- النافذة المنبثقة لعرض تفاصيل التذكرة (View Details Modal) -->
+    <div class="modal-overlay" id="viewModal">
+      <div class="modal-card">
+        <span class="close-btn" id="closeViewModalBtn">&times;</span>
+        <div class="modal-header">
+          <h3 id="viewTicketId">تفاصيل التذكرة</h3>
+          <p>معلومات التذكرة وسجل الحالة</p>
+        </div>
+        <div class="modal-body" style="text-align: right; line-height: 1.8">
+          <p><strong>عنوان المشكلة:</strong> <span id="viewTitle"></span></p>
+          <p>
+            <strong>القسم المعني:</strong> <span id="viewDepartment"></span>
+          </p>
+          <p>
+            <strong>مستوى الأولوية:</strong> <span id="viewPriority"></span>
+          </p>
+          <p><strong>حالة التذكرة:</strong> <span id="viewStatus"></span></p>
+          <p><strong>تاريخ الإنشاء:</strong> <span id="viewDate"></span></p>
+          <hr
+            style="
+              margin: 1rem 0;
+              border: 0;
+              border-top: 1px solid var(--border-color);
+            "
+          />
+          <p><strong>تفاصيل ووصف المشكلة:</strong></p>
+          <div
+            id="viewDescription"
+            style="
+              background: #f8fafc;
+              padding: 0.8rem;
+              border-radius: 8px;
+              border: 1px solid var(--border-color);
+              margin-top: 0.5rem;
+              white-space: pre-line;
+            "
+          ></div>
+        </div>
+        <div class="modal-footer" style="margin-top: 1.5rem">
+          <button type="button" class="btn btn-secondary" id="closeViewBtn">
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ربط ملف ال HTML  مع  جافا سكريبت -->
+    <script src="script.js"></script>
+  </body>
+</html>

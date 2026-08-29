@@ -1,0 +1,293 @@
+/* ====================================================
+   تنسيقات عامة ومتغيرات الألوان (Theme Variables)
+   ==================================================== */
+:root {
+    --primary-color: #4f46e5;      /* اللون الأزرق البنفسجي الرئيسي */
+    --primary-hover: #4338ca;      /* لون التمرير للزر الرئيسي */
+    --bg-color: #f8fafc;           /* خلفية الصفحة فاتحة ومريحة */
+    --card-bg: #ffffff;            /* خلفية الكروت والأقسام */
+    --text-color: #1e293b;         /* لون النصوص الأساسي */
+    --text-muted: #64748b;        /* لون النصوص الثانوية */
+    --border-color: #e2e8f0;      /* لون الحدود والفاصل */
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); /* ظلال ناعمة */
+    
+    /* ألوان حالات التذاكر */
+    --status-new: #ef4444;        /* أحمر للتذاكر الجديدة */
+    --status-progress: #f59e0b;   /* برتقالي لقيد المعالجة */
+    --status-closed: #10b981;     /* أخضر للمغلقة */
+}
+
+/* إعادة ضبط الحواف والصناديق */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding-bottom: 40px;
+}
+
+/* ====================================================
+   تنسيق الشريط العلوي (Header)
+   ==================================================== */
+.main-header {
+    background: var(--card-bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    box-shadow: var(--shadow);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo h2 {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.logo span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ====================================================
+   الأزرار العامة (Buttons)
+   ==================================================== */
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #e2e8f0;
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background-color: #cbd5e1;
+}
+
+/* ====================================================
+   الحاوية ولوحة الأرقام (Dashboard Stats)
+   ==================================================== */
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.stat-card h3 {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.stat-card.total p { color: var(--primary-color); }
+.stat-card.pending p { color: var(--status-new); }
+.stat-card.progress p { color: var(--status-progress); }
+.stat-card.closed p { color: var(--status-closed); }
+
+/* ====================================================
+   جدول عرض التذاكر والتصفية
+   ==================================================== */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.table-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.table-controls input, .table-controls select {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: right;
+}
+
+th, td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+th {
+    background-color: #f1f5f9;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* شارات الحالة والأولوية (Badges) */
+.badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.badge-new { background-color: #fee2e2; color: var(--status-new); }
+.badge-progress { background-color: #fef3c7; color: var(--status-progress); }
+.badge-closed { background-color: #d1fae5; color: var(--status-closed); }
+
+/* أزرار الإجراءات داخل الجدول */
+.action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+}
+
+/* ====================================================
+   تنسيق النافذة المنبثقة (Pop-up Modal)
+   ==================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* خلفية معتمة */
+    backdrop-filter: blur(4px); /* تأثير ضبابي عصري */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+/* عند فتح النافذة برمجياً */
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-card {
+    background: var(--card-bg);
+    width: 90%;
+    max-width: 550px;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active .modal-card {
+    transform: translateY(0);
+}
+
+.close-btn {
+    position: absolute;
+    top: 1rem;
+    left: 1.5rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.modal-header {
+    margin-bottom: 1.5rem;
+}
+
+.modal-header p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* تنسيق النموذج */
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
